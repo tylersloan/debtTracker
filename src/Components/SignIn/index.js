@@ -1,4 +1,5 @@
 import React from 'react';
+import fbConfig from '../../../config/firebase.config';
 import styles from './SignIn.css';
 
 class SignIn extends React.Component {
@@ -12,7 +13,7 @@ class SignIn extends React.Component {
       <div>
         <h3>Log in</h3>
         <form onSubmit={(e) => this.goToDebt(e)}>
-          <input className={styles.input} type='text' defaultValue='debt-9c279' placeholder='Debt Name' ref={(input) => { this.debtInput = input }} />
+          <input className={styles.input} type='text' defaultValue={fbConfig.databaseName} placeholder='Debt Name' ref={(input) => { this.debtInput = input }} />
           <button className={styles.button} type='submit'>See Debts</button>
         </form>
       </div>

@@ -1,0 +1,10 @@
+// global styles
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'helvetica Neue';
+  font-weight: 300;
+}
