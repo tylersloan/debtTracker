@@ -1,6 +1,22 @@
+:global {
+  * {
+    box-sizing: border-box;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+  }
+}
+
 .container {
   margin: 0 auto;
   width: 95%;
+}
+
+.narrow {
+  max-width: 20vw;
+  width: 100%;
 }
 
 .flex {
@@ -18,4 +34,9 @@
       flex-basis: 33.33%;
     }
   }
+}
+
+.centered {
+  justify-content: center;
+  min-height: 100vh;
 }
