@@ -1,0 +1,19 @@
+.table {
+  &Row {
+    border-bottom: 1px solid #ccc;
+    height: 4em;
+  }
+
+  &Cell {
+    padding: 0 1em;
+  }
+}
+
+.scroller {
+  max-height: 80vh;
+  overflow: scroll;
+
+  &Child {
+    flex: 0 0 auto;
+  }
+}

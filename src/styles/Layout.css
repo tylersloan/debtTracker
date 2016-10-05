@@ -1,0 +1,27 @@
+:global {
+  * {
+    box-sizing: border-box;
+  }
+}
+
+.container {
+  margin: 0 auto;
+  width: 95%;
+}
+
+.flex {
+  align-items: center;
+  display: flex;
+
+  &Child {
+    width: 100%;
+
+    &Half {
+      flex-basis: 50%;
+    }
+
+    &1of3 {
+      flex-basis: 33.33%;
+    }
+  }
+}
