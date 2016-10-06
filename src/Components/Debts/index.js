@@ -1,6 +1,6 @@
 import React from 'react';
 import base from '../../scripts/base';
-import fbConfig from '../../../config/firebase.config';
+// import fbConfig from '../../../config/firebase.config';
 import styles from './Debts.css';
 
 import allDebts from '../../scripts/debts';
@@ -128,10 +128,10 @@ class Debts extends React.Component {
   authHandler(error, authData) {
     if (error) {
       console.error(error.code, error.message);
-      document.body.style.background = "red";
+      document.body.style.background = "#EF5B5B";
       return;
     } else {
-      console.log(authData);
+      // console.log(authData);
       // grab info about debt database
       const debtRef = base.database().ref(this.props.params.debtId)
 
@@ -204,12 +204,13 @@ class Debts extends React.Component {
     } else {
       return (
         <div>
-          <label className={form.checkbox}>
-           <span>Edit Mode</span>
+          <label className={`${form.checkbox} ${styles.toggler}`}>
+           <span className={form.label}>Edit Mode</span>
            <input onChange={(e) => this.toggleView(e)} type="checkbox" />
+           <span className={form.switch}></span>
           </label>
 
-          <button onClick={this.logout}>Logout</button>
+          <button className={styles.logout} onClick={this.logout}>Logout</button>
 
           <div className={this.state.editMode ? styles.hidden : styles.visible}>
             <TableHeader column1='Creditor' column2='Payment' column3='Balance' column4='Delta' />

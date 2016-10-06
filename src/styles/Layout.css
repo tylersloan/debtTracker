@@ -1,5 +1,6 @@
 :global {
-  * {
+  *,
+  *:before {
     box-sizing: border-box;
   }
 
@@ -11,7 +12,8 @@
 
 .container {
   margin: 0 auto;
-  width: 95%;
+  max-width: 768px;
+  width: 85vw;
 }
 
 .narrow {

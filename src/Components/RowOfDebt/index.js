@@ -15,13 +15,13 @@ class RowOfDebt extends React.Component {
 
     if (delta > 1) {
       deltaStyles = {
-        'color': 'green'
+        'color': '#02BD88'
       }
 
       deltaHTML = `⬆ ${((delta*100) - 100).toFixed(2)}%`;
     } else {
       deltaStyles = {
-        'color': 'red'
+        'color': '#EF5B5B'
       }
 
       deltaHTML = `⬇ ${((delta*100) - 100).toFixed(2)}%`;

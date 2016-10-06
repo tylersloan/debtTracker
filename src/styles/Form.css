@@ -29,7 +29,43 @@
 }
 
 .checkbox {
+  .label {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .switch {
+    border: 2px solid;
+    display: inline-block;
+    width: 1em;
+    margin-top: 0.5em;
+    position: relative;
+    vertical-align: middle;
+    height: 1em;
+
+    &:before {
+      background: #EF5B5B;
+      content: '';
+      display: block;
+      height: 100%;
+      width: 100%;
+      right: 0;
+      left: 0;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+    }
+  }
+
   input {
-    visibility: hidden;
+    display: none;
+
+    &:checked {
+      + .switch {
+        &:before {
+          background: #02bd88;
+        }
+      }
+    }
   }
 }
