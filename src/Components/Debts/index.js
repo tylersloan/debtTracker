@@ -1,7 +1,6 @@
 import React from 'react';
 import base from '../../scripts/base';
 
-import h from '../../scripts/helpers';
 import allDebts from '../../scripts/debts';
 
 import TableHeader from '../TableHeader';
@@ -214,21 +213,19 @@ class Debts extends React.Component {
         }
       }
 
-      let monthlyArray = [];
-      let currentBalanceArray = [];
       let previousBalanceArray = [];
+      let currentBalanceArray = [];
+      let monthlyArray = [];
 
       for (var key in this.state.debts) {
-          monthlyArray.push(parseInt(this.state.debts[key].monthly, 10));
-          currentBalanceArray.push(parseInt(this.state.debts[key].currentBalance, 10));
           previousBalanceArray.push(parseInt(this.state.debts[key].previousBalance, 10));
+          currentBalanceArray.push(parseInt(this.state.debts[key].currentBalance, 10));
+          monthlyArray.push(parseInt(this.state.debts[key].monthly, 10));
       }
 
-      const monthlyTotal = monthlyArray.reduce((a, b) => a + b, 0);
-      const currentBalanceTotal = currentBalanceArray.reduce((a, b) => a + b, 0);
       const previousBalanceTotal = previousBalanceArray.reduce((a, b) => a + b, 0);
-
-      console.log(currentBalanceTotal, previousBalanceTotal);
+      const currentBalanceTotal  = currentBalanceArray.reduce((a, b) => a + b, 0);
+      const monthlyTotal         = monthlyArray.reduce((a, b) => a + b, 0);
 
       return (
         <div>
@@ -236,12 +233,7 @@ class Debts extends React.Component {
             <TableHeader {...tableHeaderColumns} />
             <section className={this.state.editMode ? styles.hidden : styles.visible}>
               <div className={`${styles.wrapper} ${table.table} ${table.scroller}`}>
-                {
-                  Object.keys(this.state.debts)
-                    .map(key =>
-                      <RowOfDebt details={this.state.debts[key]} key={key} />
-                    )
-                }
+                {Object.keys(this.state.debts).map(key => <RowOfDebt details={this.state.debts[key]} key={key} />)}
                 <RowOfDebt
                   addClass={styles.totals}
                   details={{
@@ -253,12 +245,9 @@ class Debts extends React.Component {
                 />
               </div>
             </section>
-
             <section className={this.state.editMode ? styles.visible : styles.hidden}>
               <div className={table.scroller}>
-                {
-                  Object.keys(this.state.debts).map(this.renderEditRows)
-                }
+                {Object.keys(this.state.debts).map(this.renderEditRows)}
               </div>
             </section>
           </main>
