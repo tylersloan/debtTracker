@@ -244,7 +244,6 @@ class Debts extends React.Component {
                 {
                   Object.keys(this.state.debts).map(this.renderEditRows)
                 }
-                <AddNewDebts addDebt={this.addDebt} loadDebts={this.loadDebts} />
               </div>
             </section>
           </main>
