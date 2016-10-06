@@ -1,11 +1,12 @@
 .logout {
+  composes: button from '../../styles/Form.css';
   background: transparent;
   border: 2px solid;
-  cursor: pointer;
-  height: 1.5em;
-  line-height: 1.5em;
+  color: black;
+  width: auto;
 
   &:hover {
+    background: transparent;
     color: #EF5B5B;
   }
 }

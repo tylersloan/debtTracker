@@ -7,65 +7,27 @@
   display: block;
   font-size: 16px;
   margin: 0;
-  padding: 0.5em;
 
   & + & { margin-top: 1em; }
 }
 
 .input {
+  padding: 0.5em;
   width: 100%;
 }
 
 .button {
+  align-items: center;
   background: black;
   color: white;
   cursor: pointer;
+  display: flex;
+  height: 2.25em;
+  justify-content: center;
   margin: 0 0 0 auto;
   width: 50%;
 
   &:hover {
     background: #02bd88;
-  }
-}
-
-.checkbox {
-  .label {
-    display: inline-block;
-    vertical-align: middle;
-  }
-
-  .switch {
-    border: 2px solid;
-    display: inline-block;
-    width: 1em;
-    margin-left: 0.5em;
-    position: relative;
-    vertical-align: middle;
-    height: 1em;
-
-    &:before {
-      background: #EF5B5B;
-      content: '';
-      display: block;
-      height: 100%;
-      width: 100%;
-      right: 0;
-      left: 0;
-      position: absolute;
-      top: 0;
-      bottom: 0;
-    }
-  }
-
-  input {
-    display: none;
-
-    &:checked {
-      + .switch {
-        &:before {
-          background: #02bd88;
-        }
-      }
-    }
   }
 }
