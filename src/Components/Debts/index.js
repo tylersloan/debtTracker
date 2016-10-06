@@ -197,8 +197,6 @@ class Debts extends React.Component {
   };
 
   render() {
-    // console.log(this.state);
-
     if (this.state.uid !== this.state.owner) {
       return <div>{this.renderLogin()}</div>;
     } else {
@@ -229,8 +227,8 @@ class Debts extends React.Component {
               {
                 Object.keys(this.state.debts).map(this.renderEditRows)
               }
-              <AddDebtForm addDebt={this.addDebt} />
-              <button onClick={this.loadDebts}>Load All Debts</button>
+              {/*<AddDebtForm addDebt={this.addDebt} />
+              <button onClick={this.loadDebts}>Load All Debts</button>*/}
             </div>
           </aside>
         </div>
