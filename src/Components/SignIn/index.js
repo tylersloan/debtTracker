@@ -3,12 +3,19 @@ import fbConfig from '../../../config/firebase.config';
 import styles from './SignIn.css';
 
 class SignIn extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      uid: null
+    }
+  }
+
   goToDebt(e) {
     e.preventDefault();
     this.context.router.transitionTo(`/debts/${this.debtInput.value}`)
   }
 
-  render() {
+  renderLogin() {
     return (
       <div>
         <h3>Log in</h3>
@@ -18,6 +25,16 @@ class SignIn extends React.Component {
         </form>
       </div>
     )
+  };
+
+  render() {
+    console.log(this.state.uid);
+
+    if (this.state.uid) {
+      return <div>{this.goToDebt()}</div>;
+    } else {
+      return <div>{this.renderLogin()}</div>;
+    }
   }
 }
 

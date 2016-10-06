@@ -2,9 +2,9 @@ import React from 'react';
 
 import { BrowserRouter, Match, Miss } from 'react-router'
 
-import SignIn from './Components/SignIn';
-import AddDebtForm from './Components/AddDebtForm';
-import EditDebts from './Components/EditDebts';
+// import SignIn from './Components/SignIn';
+// import AddDebtForm from './Components/AddDebtForm';
+// import EditDebts from './Components/EditDebts';
 import Debts from './Components/Debts';
 import NoMatch from './Components/NoMatch';
 
@@ -30,10 +30,10 @@ class App extends React.Component {
                  When the current location matches the `pattern`
                  then the `component` will render.
           */}
-          <Match exactly pattern="/" component={SignIn} />
+          <Match exactly pattern="/" component={Debts} />
           <Match pattern="/debts/:debtId" component={Debts} />
-          <Match pattern="/adddebt" component={AddDebtForm} />
-          <Match pattern="/editdebts" component={EditDebts} />
+          {/*<Match pattern="/adddebt" component={AddDebtForm} />
+          <Match pattern="/editdebts" component={EditDebts} />*/}
 
           {/* If none of those match, then a sibling `Miss` will render. */}
           {<Miss component={NoMatch}/>}

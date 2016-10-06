@@ -1,14 +1,15 @@
 import React from 'react';
 import base from '../../scripts/base';
+import fbConfig from '../../../config/firebase.config';
 import styles from './Debts.css';
 
-// import allDebts from '../../scripts/debts';
+import allDebts from '../../scripts/debts';
 
 import TableHeader from '../TableHeader';
 import RowOfDebt from '../RowOfDebt';
-// import AddDebtForm from '../AddDebtForm';
+import AddDebtForm from '../AddDebtForm';
 
- import layout from '../../styles/Layout.css';
+import layout from '../../styles/Layout.css';
 import table from '../../styles/Table.css';
 import form from '../../styles/Form.css';
 
@@ -17,20 +18,25 @@ class Debts extends React.Component {
     super();
 
     this.addDebt = this.addDebt.bind(this);
-    // this.loadDebts = this.loadDebts.bind(this);
+    this.loadDebts = this.loadDebts.bind(this);
     this.renderEditRows = this.renderEditRows.bind(this);
     this.handleDebtUpdate = this.handleDebtUpdate.bind(this);
     this.updateDebt = this.updateDebt.bind(this);
     this.toggleView = this.toggleView.bind(this);
+    this.authHandler = this.authHandler.bind(this);
+    this.logout = this.logout.bind(this);
 
     this.state = {
+      uid: null,
+      loggedIn: false,
+      user: {},
       editMode: false,
       debts: {}
     }
   };
 
   componentWillMount() {
-    this.ref = base.syncState(`${this.props.params.debtId}/debts`, {
+    this.ref = base.syncState(`/debts`, {
       context: this,
       state: 'debts'
     });
@@ -38,6 +44,15 @@ class Debts extends React.Component {
 
   componentWillUnmount() {
     base.removeBinding(this.ref);
+  }
+
+  componentDidMount() {
+    base.onAuth((user) => {
+      // console.log(user.uid);
+      if (user) {
+        this.authHandler(null, user);
+      }
+    })
   }
 
   addDebt(debt) {
@@ -50,11 +65,12 @@ class Debts extends React.Component {
     this.setState({ debts });
   };
 
-  // loadDebts() {
-  //   this.setState({
-  //     debts: allDebts
-  //   })
-  // };
+  loadDebts() {
+    console.log("allDebts: ", allDebts);
+    this.setState({
+      debts: allDebts
+    })
+  };
 
   updateDebt(key, updatedDebt) {
     const debts = {...this.state.debts};
@@ -110,38 +126,121 @@ class Debts extends React.Component {
     }
   };
 
-  render() {
-    return (
-      <div>
-        <label className={form.checkbox}>
-         <span>Edit Mode</span>
-         <input onChange={(e) => this.toggleView(e)} type="checkbox" />
-        </label>
+  authHandler(error, authData) {
+    if (error) {
+      console.error(error.code, error.message);
+      document.body.style.background = "red";
+      return;
+    } else {
+      console.log(authData);
+      // grab info about debt database
+      const debtRef = base.database().ref(this.props.params.debtId)
 
-        <div className={this.state.editMode ? styles.hidden : styles.visible}>
-          <TableHeader column1='Creditor' column2='Payment' column3='Balance' column4='Delta' />
-          <main>
-            <div className={`${styles.wrapper} ${table.table} ${table.scroller}`}>
-              {
-                Object.keys(this.state.debts)
-                  .map(key => <RowOfDebt details={this.state.debts[key]} key={key}/>)
-              }
-            </div>
-          </main>
+      // query db once for data
+      debtRef.once('value', (snapshot) => {
+        const data = snapshot.val() || {};
+
+        if (!data.owner) {
+          debtRef.set({
+            owner: authData.uid
+          })
+        }
+
+        this.setState({
+          uid: authData.uid,
+          owner: data.owner || authData.uid
+        })
+      })
+    }
+  }
+
+  authenticate(e) {
+    e.preventDefault();
+
+    base.authWithPassword({
+      email: this.emailInput.value,
+      password: this.passwordInput.value
+    }, this.authHandler);
+  }
+
+  logout() {
+    base.unauth();
+    this.setState({
+      uid: null
+    })
+  }
+
+  renderLogin() {
+    return (
+      <div className={`${layout.flex} ${layout.centered}`}>
+        <div className={layout.narrow}>
+          <form className={form.form} onSubmit={(e) => this.authenticate(e)}>
+            <input
+              className={styles.input}
+              type='email'
+              placeholder='email address'
+              ref={(input) => { this.emailInput = input }}
+            />
+            <input
+              className={styles.input}
+              type='password'
+              placeholder='password'
+              ref={(input) => { this.passwordInput = input }}
+            />
+            <button className={styles.button} type='submit'>Log In</button>
+
+            {/*<input className={styles.input} type='text' defaultValue={fbConfig.databaseName} placeholder='Debt Name' ref={(input) => { this.debtInput = input }} />
+            <button className={styles.button} type='submit'>See Debts</button>*/}
+          </form>
         </div>
-        <aside className={this.state.editMode ? styles.visible : styles.hidden}>
-          <TableHeader column1='Creditor' column2='Payment' column3='Current' column4='Previous' />
-          <div className={table.scroller}>
-            {
-              Object.keys(this.state.debts).map(this.renderEditRows)
-            }
-            {/*<AddDebtForm addDebt={this.addDebt} loadDebts={this.loadDebts} />
-            <button onClick={this.props.loadDebts}>Load All Debts</button>*/}
-          </div>
-        </aside>
       </div>
     )
   };
+
+  render() {
+    // console.log(this.state);
+
+    if (this.state.uid !== this.state.owner) {
+      return <div>{this.renderLogin()}</div>;
+    } else {
+      return (
+        <div>
+          <label className={form.checkbox}>
+           <span>Edit Mode</span>
+           <input onChange={(e) => this.toggleView(e)} type="checkbox" />
+          </label>
+
+          <button onClick={this.logout}>Logout</button>
+
+          <div className={this.state.editMode ? styles.hidden : styles.visible}>
+            <TableHeader column1='Creditor' column2='Payment' column3='Balance' column4='Delta' />
+            <main>
+              <div className={`${styles.wrapper} ${table.table} ${table.scroller}`}>
+                {
+                  Object.keys(this.state.debts)
+                    .map(key => <RowOfDebt details={this.state.debts[key]} key={key}/>)
+                }
+              </div>
+            </main>
+          </div>
+          <aside className={this.state.editMode ? styles.visible : styles.hidden}>
+            <TableHeader column1='Creditor' column2='Payment' column3='Current' column4='Previous' />
+            <div className={table.scroller}>
+              {
+                Object.keys(this.state.debts).map(this.renderEditRows)
+              }
+              <AddDebtForm addDebt={this.addDebt} />
+              <button onClick={this.loadDebts}>Load All Debts</button>
+            </div>
+          </aside>
+        </div>
+      )
+    }
+  };
+}
+
+Debts.contextTypes = {
+  router: React.PropTypes.object
 }
 
 export default Debts;
