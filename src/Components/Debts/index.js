@@ -8,6 +8,7 @@ import allDebts from '../../scripts/debts';
 import TableHeader from '../TableHeader';
 import RowOfDebt from '../RowOfDebt';
 import Toggler from '../Toggler';
+import Logout from '../Logout';
 // import AddDebtForm from '../AddDebtForm';
 
 import layout from '../../styles/Layout.css';
@@ -221,8 +222,8 @@ class Debts extends React.Component {
 
       return (
         <div>
+          <Logout logout={this.logout} />
           <Toggler toggleView={this.toggleView} />
-          <button className={styles.logout} onClick={this.logout}>Logout</button>
 
           <main>
             <TableHeader {...tableHeaderColumns} />

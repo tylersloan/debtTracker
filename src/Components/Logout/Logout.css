@@ -1,0 +1,12 @@
+.logout {
+  background: transparent;
+  border: 2px solid;
+  cursor: pointer;
+  position: absolute;
+  bottom: 2.5vh;
+  right: 7.5vw;
+
+  &:hover {
+    color: #EF5B5B;
+  }
+}
