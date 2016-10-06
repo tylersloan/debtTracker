@@ -9,7 +9,7 @@ import TableHeader from '../TableHeader';
 import RowOfDebt from '../RowOfDebt';
 import Toggler from '../Toggler';
 import Logout from '../Logout';
-// import AddDebtForm from '../AddDebtForm';
+import AddNewDebts from '../AddNewDebts';
 
 import layout from '../../styles/Layout.css';
 import table from '../../styles/Table.css';
@@ -227,6 +227,9 @@ class Debts extends React.Component {
 
           <main>
             <TableHeader {...tableHeaderColumns} />
+          {/*
+            <AllDebts  />
+          */}
             <section className={this.state.editMode ? styles.hidden : styles.visible}>
               <div className={`${styles.wrapper} ${table.table} ${table.scroller}`}>
                 {
@@ -241,8 +244,7 @@ class Debts extends React.Component {
                 {
                   Object.keys(this.state.debts).map(this.renderEditRows)
                 }
-                {/*<AddDebtForm addDebt={this.addDebt} />
-                <button onClick={this.loadDebts}>Load All Debts</button>*/}
+                <AddNewDebts addDebt={this.addDebt} loadDebts={this.loadDebts} />
               </div>
             </section>
           </main>
