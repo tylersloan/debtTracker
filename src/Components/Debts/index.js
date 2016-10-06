@@ -1,7 +1,7 @@
 import React from 'react';
 import base from '../../scripts/base';
 
-import allDebts from '../../scripts/debts';
+// import allDebts from '../../scripts/debts';
 
 import TableHeader from '../TableHeader';
 import RowOfDebt from '../RowOfDebt';
@@ -18,7 +18,7 @@ class Debts extends React.Component {
     super();
 
     this.addDebt = this.addDebt.bind(this);
-    this.loadDebts = this.loadDebts.bind(this);
+    // this.loadDebts = this.loadDebts.bind(this);
     this.renderEditRows = this.renderEditRows.bind(this);
     this.handleDebtUpdate = this.handleDebtUpdate.bind(this);
     this.updateDebt = this.updateDebt.bind(this);
@@ -65,11 +65,11 @@ class Debts extends React.Component {
     this.setState({ debts });
   };
 
-  loadDebts() {
-    this.setState({
-      debts: allDebts
-    })
-  };
+  // loadDebts() {
+  //   this.setState({
+  //     debts: allDebts
+  //   })
+  // };
 
   updateDebt(key, updatedDebt) {
     const debts = {...this.state.debts};
