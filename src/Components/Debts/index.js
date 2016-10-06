@@ -7,7 +7,8 @@ import allDebts from '../../scripts/debts';
 
 import TableHeader from '../TableHeader';
 import RowOfDebt from '../RowOfDebt';
-import AddDebtForm from '../AddDebtForm';
+import Toggler from '../Toggler';
+// import AddDebtForm from '../AddDebtForm';
 
 import layout from '../../styles/Layout.css';
 import table from '../../styles/Table.css';
@@ -200,37 +201,50 @@ class Debts extends React.Component {
     if (this.state.uid !== this.state.owner) {
       return <div>{this.renderLogin()}</div>;
     } else {
+      let tableHeaderColumns = {}
+
+      if (this.state.editMode) {
+        tableHeaderColumns = {
+          column1: 'Creditor',
+          column2: 'Payment',
+          column3: 'Balance',
+          column4: 'Delta',
+        }
+      } else {
+        tableHeaderColumns = {
+          column1: 'Creditor',
+          column2: 'Payment',
+          column3: 'Current',
+          column4: 'Previous',
+        }
+      }
+
       return (
         <div>
-          <label className={`${form.checkbox} ${styles.toggler}`}>
-           <span className={form.label}>Edit Mode</span>
-           <input onChange={(e) => this.toggleView(e)} type="checkbox" />
-           <span className={form.switch}></span>
-          </label>
-
+          <Toggler toggleView={this.toggleView} />
           <button className={styles.logout} onClick={this.logout}>Logout</button>
 
-          <div className={this.state.editMode ? styles.hidden : styles.visible}>
-            <TableHeader column1='Creditor' column2='Payment' column3='Balance' column4='Delta' />
-            <main>
+          <main>
+            <TableHeader {...tableHeaderColumns} />
+            <section className={this.state.editMode ? styles.hidden : styles.visible}>
               <div className={`${styles.wrapper} ${table.table} ${table.scroller}`}>
                 {
                   Object.keys(this.state.debts)
                     .map(key => <RowOfDebt details={this.state.debts[key]} key={key}/>)
                 }
               </div>
-            </main>
-          </div>
-          <aside className={this.state.editMode ? styles.visible : styles.hidden}>
-            <TableHeader column1='Creditor' column2='Payment' column3='Current' column4='Previous' />
-            <div className={table.scroller}>
-              {
-                Object.keys(this.state.debts).map(this.renderEditRows)
-              }
-              {/*<AddDebtForm addDebt={this.addDebt} />
-              <button onClick={this.loadDebts}>Load All Debts</button>*/}
-            </div>
-          </aside>
+            </section>
+
+            <section className={this.state.editMode ? styles.visible : styles.hidden}>
+              <div className={table.scroller}>
+                {
+                  Object.keys(this.state.debts).map(this.renderEditRows)
+                }
+                {/*<AddDebtForm addDebt={this.addDebt} />
+                <button onClick={this.loadDebts}>Load All Debts</button>*/}
+              </div>
+            </section>
+          </main>
         </div>
       )
     }

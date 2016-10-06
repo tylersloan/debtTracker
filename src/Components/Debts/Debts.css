@@ -11,14 +11,6 @@
   display: none;
 }
 
-.toggler {
-  position: absolute;
-  left: 0;
-  top: 0;
-  transform: rotate(-180deg) translateX(-8px) translateY(-50px);
-  writing-mode: vertical-rl;
-}
-
 .logout {
   background: transparent;
   border: 2px solid;
