@@ -66,7 +66,6 @@ class Debts extends React.Component {
   };
 
   loadDebts() {
-    console.log("allDebts: ", allDebts);
     this.setState({
       debts: allDebts
     })
@@ -176,21 +175,21 @@ class Debts extends React.Component {
         <div className={layout.narrow}>
           <form className={form.form} onSubmit={(e) => this.authenticate(e)}>
             <input
-              className={styles.input}
+              className={form.input}
               type='email'
               placeholder='email address'
               ref={(input) => { this.emailInput = input }}
             />
             <input
-              className={styles.input}
+              className={form.input}
               type='password'
               placeholder='password'
               ref={(input) => { this.passwordInput = input }}
             />
-            <button className={styles.button} type='submit'>Log In</button>
+            <button className={form.button} type='submit'>Log In</button>
 
-            {/*<input className={styles.input} type='text' defaultValue={fbConfig.databaseName} placeholder='Debt Name' ref={(input) => { this.debtInput = input }} />
-            <button className={styles.button} type='submit'>See Debts</button>*/}
+            {/*<input className={form.input} type='text' defaultValue={fbConfig.databaseName} placeholder='Debt Name' ref={(input) => { this.debtInput = input }} />
+            <button className={form.button} type='submit'>See Debts</button>*/}
           </form>
         </div>
       </div>

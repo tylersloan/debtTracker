@@ -10,11 +10,3 @@
 .hidden {
   display: none;
 }
-
-.input {
-  composes: input from '../../styles/Form.css';
-}
-
-.button {
-  composes: input button from '../../styles/Form.css';
-}
