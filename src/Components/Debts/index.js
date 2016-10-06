@@ -92,7 +92,7 @@ class Debts extends React.Component {
     const debt = this.state.debts[key];
 
     return (
-      <div key={key} className={`${layout.flex} ${table.tableRow} ${table.scroller}`}>
+      <div key={key} className={`${layout.flex} ${table.tableRow} ${table.scrollerChild}`}>
         <div className={`${layout.flex} ${layout.flexChildHalf}`} >
           <div className={`${layout.flexChild} ${table.tableHeader} ${table.tableCell}`}>
             <input type='text' onChange={(e) => this.handleDebtUpdate(e, key)} name='creditor' className={form.input} value={debt.creditor} />
@@ -128,7 +128,6 @@ class Debts extends React.Component {
   authHandler(error, authData) {
     if (error) {
       console.error(error.code, error.message);
-      document.body.style.background = "#EF5B5B";
       return;
     } else {
       // grab info about debt database - don't pass anything to ref() bc there's only one choice in our db
@@ -202,34 +201,37 @@ class Debts extends React.Component {
         tableHeaderColumns = {
           column1: 'Creditor',
           column2: 'Payment',
-          column3: 'Balance',
-          column4: 'Delta',
+          column3: 'Current',
+          column4: 'Previous',
         }
       } else {
         tableHeaderColumns = {
           column1: 'Creditor',
           column2: 'Payment',
-          column3: 'Current',
-          column4: 'Previous',
+          column3: 'Balance',
+          column4: 'Delta',
         }
       }
 
       return (
         <div>
-          <Logout logout={this.logout} />
-          <Toggler toggleView={this.toggleView} />
-
-          <main>
+          <main className={styles.main}>
             <TableHeader {...tableHeaderColumns} />
-          {/*
-            <AllDebts  />
-          */}
             <section className={this.state.editMode ? styles.hidden : styles.visible}>
               <div className={`${styles.wrapper} ${table.table} ${table.scroller}`}>
                 {
                   Object.keys(this.state.debts)
                     .map(key => <RowOfDebt details={this.state.debts[key]} key={key}/>)
                 }
+                <RowOfDebt
+                  addClass={styles.totals}
+                  details={{
+                    creditor: 'Totals: ',
+                    monthly: '1234567',
+                    currentBalance: '124234567',
+                    previousBalance: '134234567'
+                  }}
+                />
               </div>
             </section>
 
@@ -241,6 +243,10 @@ class Debts extends React.Component {
               </div>
             </section>
           </main>
+          <footer className={layout.footer}>
+            <Toggler toggleView={this.toggleView} />
+            <Logout logout={this.logout} />
+          </footer>
         </div>
       )
     }

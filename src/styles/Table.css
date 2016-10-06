@@ -10,7 +10,8 @@
 }
 
 .scroller {
-  max-height: 80vh;
+  border-bottom: 2px solid;
+  height: calc(90vh - 52px);
   overflow: scroll;
 
   &Child {

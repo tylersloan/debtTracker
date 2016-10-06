@@ -8,7 +8,6 @@ class RowOfDebt extends React.Component {
   render() {
     const { details } = this.props;
     const { previousBalance, currentBalance } = details;
-    // const delta = (1 - (currentBalance/previousBalance))*100;
     const delta = (currentBalance/previousBalance);
 
     let deltaStyles, deltaHTML;
@@ -36,7 +35,7 @@ class RowOfDebt extends React.Component {
     }
 
     return (
-      <div className={`${rowClass} ${table.scrollerChild}`}>
+      <div className={`${this.props.addClass} ${rowClass} ${table.scrollerChild}`}>
         <div className={`${layout.flex} ${layout.flexChildHalf}`} >
           <div className={`${layout.flexChild} ${table.tableHeader} ${table.tableCell}`}>
             <p>{details.creditor}</p>
@@ -54,7 +53,6 @@ class RowOfDebt extends React.Component {
             </p>
           </div>
           <div className={`${layout.flexChild1of3} ${table.tableCell}`}>
-            {/*<p className="js-delta">{delta.toFixed(2)}%</p>*/}
             <p style={deltaStyles}>{deltaHTML}</p>
           </div>
         </div>

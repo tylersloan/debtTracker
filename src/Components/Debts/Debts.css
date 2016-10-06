@@ -3,10 +3,19 @@
   flex-direction: column;
 }
 
+.main {
+  height: 90vh;
+}
+
 .visible {
   display: block;
 }
 
 .hidden {
   display: none;
+}
+
+.totals {
+  border-top: 1px dashed;
+  font-weight: bolder;
 }
