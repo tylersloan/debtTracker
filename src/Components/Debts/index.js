@@ -1,6 +1,7 @@
 import React from 'react';
 import base from '../../scripts/base';
 
+import h from '../../scripts/helpers';
 import allDebts from '../../scripts/debts';
 
 import TableHeader from '../TableHeader';
@@ -213,6 +214,22 @@ class Debts extends React.Component {
         }
       }
 
+      let monthlyArray = [];
+      let currentBalanceArray = [];
+      let previousBalanceArray = [];
+
+      for (var key in this.state.debts) {
+          monthlyArray.push(parseInt(this.state.debts[key].monthly, 10));
+          currentBalanceArray.push(parseInt(this.state.debts[key].currentBalance, 10));
+          previousBalanceArray.push(parseInt(this.state.debts[key].previousBalance, 10));
+      }
+
+      const monthlyTotal = monthlyArray.reduce((a, b) => a + b, 0);
+      const currentBalanceTotal = currentBalanceArray.reduce((a, b) => a + b, 0);
+      const previousBalanceTotal = previousBalanceArray.reduce((a, b) => a + b, 0);
+
+      console.log(currentBalanceTotal, previousBalanceTotal);
+
       return (
         <div>
           <main className={styles.main}>
@@ -221,15 +238,17 @@ class Debts extends React.Component {
               <div className={`${styles.wrapper} ${table.table} ${table.scroller}`}>
                 {
                   Object.keys(this.state.debts)
-                    .map(key => <RowOfDebt details={this.state.debts[key]} key={key}/>)
+                    .map(key =>
+                      <RowOfDebt details={this.state.debts[key]} key={key} />
+                    )
                 }
                 <RowOfDebt
                   addClass={styles.totals}
                   details={{
                     creditor: 'Totals: ',
-                    monthly: '1234567',
-                    currentBalance: '124234567',
-                    previousBalance: '134234567'
+                    monthly: monthlyTotal,
+                    currentBalance: currentBalanceTotal,
+                    previousBalance: previousBalanceTotal
                   }}
                 />
               </div>
