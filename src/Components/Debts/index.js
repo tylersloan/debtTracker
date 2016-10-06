@@ -1,7 +1,5 @@
 import React from 'react';
 import base from '../../scripts/base';
-// import fbConfig from '../../../config/firebase.config';
-import styles from './Debts.css';
 
 import allDebts from '../../scripts/debts';
 
@@ -9,11 +7,11 @@ import TableHeader from '../TableHeader';
 import RowOfDebt from '../RowOfDebt';
 import Toggler from '../Toggler';
 import Logout from '../Logout';
-import AddNewDebts from '../AddNewDebts';
 
 import layout from '../../styles/Layout.css';
 import table from '../../styles/Table.css';
 import form from '../../styles/Form.css';
+import styles from './Debts.css';
 
 class Debts extends React.Component {
   constructor() {
@@ -133,9 +131,8 @@ class Debts extends React.Component {
       document.body.style.background = "#EF5B5B";
       return;
     } else {
-      // console.log(authData);
-      // grab info about debt database
-      const debtRef = base.database().ref(this.props.params.debtId)
+      // grab info about debt database - don't pass anything to ref() bc there's only one choice in our db
+      const debtRef = base.database().ref()
 
       // query db once for data
       debtRef.once('value', (snapshot) => {
@@ -189,9 +186,6 @@ class Debts extends React.Component {
               ref={(input) => { this.passwordInput = input }}
             />
             <button className={form.button} type='submit'>Log In</button>
-
-            {/*<input className={form.input} type='text' defaultValue={fbConfig.databaseName} placeholder='Debt Name' ref={(input) => { this.debtInput = input }} />
-            <button className={form.button} type='submit'>See Debts</button>*/}
           </form>
         </div>
       </div>

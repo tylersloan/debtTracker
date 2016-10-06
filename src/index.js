@@ -1,9 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+
+import Debts from './Components/Debts';
+
 import './index.css';
 
 ReactDOM.render(
-  <App />,
+  <Debts />,
   document.getElementById('root')
 );

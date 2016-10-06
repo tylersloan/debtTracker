@@ -57,12 +57,9 @@
   },
   "dependencies": {
     "firebase": "^3.4.0",
-    "form-serialize": "^0.7.1",
-    "normalize.css": "^4.2.0",
     "re-base": "^2.2.0",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
-    "react-router": "^4.0.0-alpha.3"
   },
   "scripts": {
     "start": "node scripts/start.js",
